@@ -20,7 +20,12 @@ const CoinsTable: FC<Props> = ({ coins }) => {
       coins.map(({ data: coin }) => ({
         coin: `${coin?.name} (${coin?.symbol?.toUpperCase()})`,
         price: currencyFormat(coin?.market_data?.current_price?.usd || 0),
-        ath: currencyFormat(coin?.market_data?.ath?.bmd || 0),
+        ath: `${currencyFormat(coin?.market_data?.ath?.usd || 0)} (${new Date(
+          coin?.market_data?.ath_date?.usd as string
+        ).toLocaleDateString('pt-BR')})`,
+        atl: `${currencyFormat(coin?.market_data?.atl?.usd || 0)} (${new Date(
+          coin?.market_data?.atl_date?.usd as string
+        ).toLocaleDateString('pt-BR')})`,
         gains:
           (
             (coin?.market_data?.ath?.bmd || 1) /
@@ -49,6 +54,10 @@ const CoinsTable: FC<Props> = ({ coins }) => {
       {
         Header: 'Current Price',
         accessor: 'price',
+      },
+      {
+        Header: 'All-Time Low',
+        accessor: 'atl',
       },
       {
         Header: 'All-Time High',
@@ -99,7 +108,10 @@ const CoinsTable: FC<Props> = ({ coins }) => {
 
   return (
     <div className="overflow-x-auto">
-      <table {...getTableProps()} className="table w-full">
+      <table
+        {...getTableProps()}
+        className="table table-zebra table-compact w-full"
+      >
         <thead>
           {
             // Loop over the header rows

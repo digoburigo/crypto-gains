@@ -50,6 +50,8 @@ export const COINS_IDS = [
   'notional-finance',
 ];
 
+export const COINS_IDS2 = ['bitcoin'];
+
 export const COINS_QUERIES = COINS_IDS.map((id) => {
   return {
     queryKey: ['getCoinById', id],
@@ -59,12 +61,12 @@ export const COINS_QUERIES = COINS_IDS.map((id) => {
 
 export async function ping() {
   const response = await fetch(`${COINGECKO_API}/ping`);
-  const data = response.json();
+  const data = await response.json();
   return data;
 }
 
 export async function getCoinById(id: string): Promise<Coin> {
   const response = await fetch(`${COINGECKO_API}/coins/${id}`);
-  const data = response.json();
+  const data = await response.json();
   return data;
 }
