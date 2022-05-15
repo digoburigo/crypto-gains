@@ -6,7 +6,7 @@ specifiers:
   '@types/react-dom': 18.0.4
   '@types/react-table': ^7.7.12
   autoprefixer: ^10.4.7
-  daisyui: ^2.14.3
+  daisyui: ^2.15.0
   eslint: 8.15.0
   eslint-config-next: 12.1.6
   next: 12.1.6
@@ -19,7 +19,7 @@ specifiers:
   typescript: 4.6.4
 
 dependencies:
-  daisyui: 2.14.3_cr4sis33dk4di3xnobyqnqmrf4
+  daisyui: 2.15.0_cr4sis33dk4di3xnobyqnqmrf4
   next: 12.1.6_ef5jwxihqo6n7gxfmzogljlgcm
   react: 18.1.0
   react-dom: 18.1.0_react@18.1.0
@@ -609,8 +609,8 @@ packages:
     resolution: {integrity: sha512-sa6P2wJ+CAbgyy4KFssIb/JNMLxFvKF1pCYCSXS8ZMuqZnMsrxqI2E5sPyoTpxoPU/gVZMzr2zjOfg8GIZOMsw==}
     dev: true
 
-  /daisyui/2.14.3_cr4sis33dk4di3xnobyqnqmrf4:
-    resolution: {integrity: sha512-EH6cLLaieInq81ACE8FxHsWLsH08sZ62zLxctIHTnLhn0eHvtHdLYZ6yngsy7yd43ZFOstzbyYY4q5xByZdaQQ==}
+  /daisyui/2.15.0_cr4sis33dk4di3xnobyqnqmrf4:
+    resolution: {integrity: sha512-FvKgt3+sqnpNdh9dop2Md9lNnOsJvJ1GGImKrgA6j/gu9tY0Cdp2x9ftd0Y6RrCbDvgu+1ystobvFkAPOnXAfg==}
     peerDependencies:
       autoprefixer: ^10.0.2
       postcss: ^8.1.6
