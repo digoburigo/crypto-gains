@@ -1,6 +1,6 @@
 import type { NextPage } from 'next';
 import { useQueries } from 'react-query';
-import { COINS_QUERIES } from '../api/coingecko';
+import { COINS_QUERIES } from '~api/coingecko';
 import CoinsTable from '../components/CoinsTable';
 
 const Home: NextPage = () => {

@@ -1,9 +1,9 @@
-import { Coin } from './types';
+import type { Coin } from './types';
 
-export const COINGECKO_API = 'https://api.coingecko.com/api/v3';
+const COINGECKO_API = 'https://api.coingecko.com/api/v3';
 
 // https://docs.google.com/spreadsheets/d/1wTTuxXt8n9q7C4NDXqQpI3wpKu1_5bGVmP9Xz0XGSyU
-export const COINS_IDS = [
+const COINS_IDS = [
   'bitcoin',
   'ethereum',
   'cardano',
@@ -50,9 +50,9 @@ export const COINS_IDS = [
   'notional-finance',
 ];
 
-export const COINS_IDS2 = ['bitcoin'];
+const COINS_IDS2 = ['bitcoin'];
 
-export const COINS_QUERIES = COINS_IDS.map((id) => {
+export const COINS_QUERIES = COINS_IDS2.map((id) => {
   return {
     queryKey: ['getCoinById', id],
     queryFn: () => getCoinById(id),

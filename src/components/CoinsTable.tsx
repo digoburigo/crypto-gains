@@ -1,11 +1,25 @@
-import { FC, useMemo } from 'react';
-import { UseQueryResult } from 'react-query';
+import type { FC } from 'react';
+import { useMemo } from 'react';
+import type { UseQueryResult } from 'react-query';
+import type { Column } from 'react-table';
 import { useSortBy, useTable } from 'react-table';
-import { Coin } from '../api/types';
+import type { Coin } from '~api/coingecko';
 
-interface Props {
+type Props = {
   coins: UseQueryResult<Coin, unknown>[];
-}
+};
+
+type CoinsTableColumns = {
+  coin: string;
+  price: string;
+  atl: string;
+  ath: string;
+  gains: string;
+  marketCap: string;
+  circulatingSupply: string;
+  totalSupply: string;
+  maxSupply: string;
+};
 
 function currencyFormat(num: number, dollarSymbol = true) {
   return (
@@ -45,7 +59,7 @@ const CoinsTable: FC<Props> = ({ coins }) => {
     [coins]
   );
 
-  const columns = useMemo(
+  const columns = useMemo<Column<CoinsTableColumns>[]>(
     () => [
       {
         Header: 'Coin',
@@ -99,7 +113,7 @@ const CoinsTable: FC<Props> = ({ coins }) => {
           },
         ],
       },
-    } as any,
+    },
     useSortBy
   );
 
@@ -113,64 +127,38 @@ const CoinsTable: FC<Props> = ({ coins }) => {
         className="table table-zebra table-compact w-full"
       >
         <thead>
-          {
-            // Loop over the header rows
-            headerGroups.map((headerGroup) => (
-              // Apply the header row props
-              <tr {...headerGroup.getHeaderGroupProps()}>
-                {
-                  // Loop over the headers in each row
-                  headerGroup.headers.map((column, index) => (
-                    // Apply the header cell props
-                    <th
-                      {...column.getHeaderProps(column.getSortByToggleProps())}
-                    >
-                      {
-                        // Render the header
-                        column.render('Header')
-                      }
-                      <span>
-                        {column.isSorted
-                          ? column.isSortedDesc
-                            ? ' 🔽'
-                            : ' 🔼'
-                          : ''}
-                      </span>
-                    </th>
-                  ))
-                }
-              </tr>
-            ))
-          }
+          {/* eslint-disable react/jsx-key */}
+          {/* the jsx key is provided in the .get*Props() spreads, but eslint doesn't believe you. I believe you. */}
+          {headerGroups.map((headerGroup, index) => (
+            <tr {...headerGroup.getHeaderGroupProps()}>
+              {headerGroup.headers.map((column) => (
+                <th {...column.getHeaderProps(column.getSortByToggleProps())}>
+                  {column.render('Header')}
+                  <span>
+                    {(column as any).isSorted
+                      ? (column as any).isSortedDesc
+                        ? ' 🔽'
+                        : ' 🔼'
+                      : ''}
+                  </span>
+                </th>
+              ))}
+            </tr>
+          ))}
         </thead>
-        {/* Apply the table body props */}
         <tbody {...getTableBodyProps()}>
-          {
-            // Loop over the table rows
-            rows.map((row) => {
-              // Prepare the row for display
-              prepareRow(row);
-              return (
-                // Apply the row props
-                <tr {...row.getRowProps()}>
-                  {
-                    // Loop over the rows cells
-                    row.cells.map((cell) => {
-                      // Apply the cell props
-                      return (
-                        <td {...cell.getCellProps()}>
-                          {
-                            // Render the cell contents
-                            cell.render('Cell')
-                          }
-                        </td>
-                      );
-                    })
-                  }
-                </tr>
-              );
-            })
-          }
+          {rows.map((row) => {
+            prepareRow(row);
+            return (
+              <tr {...row.getRowProps()}>
+                {row.cells.map((cell) => {
+                  return (
+                    <td {...cell.getCellProps()}>{cell.render('Cell')}</td>
+                  );
+                })}
+              </tr>
+            );
+          })}
         </tbody>
       </table>
     </div>
