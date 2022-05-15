@@ -7,7 +7,7 @@ const Home: NextPage = () => {
   const coins = useQueries(COINS_QUERIES);
 
   return (
-    <div className="container mx-auto py-4">
+    <div className="container mx-auto p-4">
       <h1 className="text-2xl font-bold mb-8">Crypto Gains 🔥</h1>
       <CoinsTable coins={coins} />
     </div>
