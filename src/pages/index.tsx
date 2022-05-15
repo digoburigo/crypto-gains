@@ -8,7 +8,7 @@ const Home: NextPage = () => {
 
   return (
     <div className="container mx-auto py-4">
-      <h1 className="text-2xl font-bold mb-8">Crypto Analyzer</h1>
+      <h1 className="text-2xl font-bold mb-8">Crypto Gains 🔥</h1>
       <CoinsTable coins={coins} />
     </div>
   );
