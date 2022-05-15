@@ -59,7 +59,7 @@ export const COINS_QUERIES = COINS_IDS.map((id) => {
   };
 });
 
-export const COINS_FETCH_QUERIES = COINS_IDS2.map((id) => {
+export const COINS_FETCH_QUERIES = COINS_IDS.map((id) => {
   return getCoinById(id);
 });
 
