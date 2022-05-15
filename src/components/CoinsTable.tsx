@@ -1,12 +1,11 @@
 import type { FC } from 'react';
 import { useMemo } from 'react';
-import type { UseQueryResult } from 'react-query';
 import type { Column } from 'react-table';
 import { useSortBy, useTable } from 'react-table';
 import type { Coin } from '~api/coingecko';
 
 type Props = {
-  coins: UseQueryResult<Coin, unknown>[];
+  coins: Coin[];
 };
 
 type CoinsTableColumns = {
@@ -31,7 +30,7 @@ function currencyFormat(num: number, dollarSymbol = true) {
 const CoinsTable: FC<Props> = ({ coins }) => {
   const data = useMemo(
     () =>
-      coins.map(({ data: coin }) => ({
+      coins.map((coin) => ({
         coin: `${coin?.name} (${coin?.symbol?.toUpperCase()})`,
         price: currencyFormat(coin?.market_data?.current_price?.usd || 0),
         ath: `${currencyFormat(coin?.market_data?.ath?.usd || 0)} (${new Date(

@@ -52,11 +52,15 @@ const COINS_IDS = [
 
 const COINS_IDS2 = ['bitcoin'];
 
-export const COINS_QUERIES = COINS_IDS2.map((id) => {
+export const COINS_QUERIES = COINS_IDS.map((id) => {
   return {
     queryKey: ['getCoinById', id],
     queryFn: () => getCoinById(id),
   };
+});
+
+export const COINS_FETCH_QUERIES = COINS_IDS2.map((id) => {
+  return getCoinById(id);
 });
 
 export async function ping() {
