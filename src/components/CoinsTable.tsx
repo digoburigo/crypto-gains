@@ -1,9 +1,7 @@
-import type { FC } from 'react';
-import { useMemo } from 'react';
+import { FC, useMemo, useState } from 'react';
 import type { Column } from 'react-table';
 import { useSortBy, useTable } from 'react-table';
 import type { Coin } from '~api/coingecko';
-
 type Props = {
   coins: Coin[];
 };
@@ -21,6 +19,8 @@ type CoinsTableColumns = {
   totalSupply: number | null;
   maxSupply: number | null;
   homePage?: string;
+  coingeckoLink?: string;
+  thumbImage?: string;
 };
 
 function currencyFormat(num: number, dollarSymbol = true) {
@@ -51,7 +51,9 @@ const CoinsTable: FC<Props> = ({ coins }) => {
         circulatingSupply: coin?.market_data?.circulating_supply,
         totalSupply: coin?.market_data?.total_supply,
         maxSupply: coin?.market_data?.max_supply,
-        homePage: coin?.links.homepage[0],
+        homePage: coin?.links?.homepage[0],
+        coingeckoLink: `https://www.coingecko.com/en/coins/${coin.id}`,
+        thumbImage: coin.image.thumb,
       })),
     [coins]
   );
@@ -62,15 +64,38 @@ const CoinsTable: FC<Props> = ({ coins }) => {
         Header: 'Coin',
         accessor: 'coin',
         Cell: ({ row, value }) => (
-          <a
-            className="btn btn-link text-slate-300 font-bold p-0 h-1"
-            href={row.original.homePage}
-            target="_blank"
-            rel="noreferrer"
-          >
-            {' '}
-            {value}{' '}
-          </a>
+          <div className="flex justify-start items-center">
+            <a
+              className="btn btn-link text-slate-300 font-bold p-0 h-1"
+              href={row.original.homePage}
+              target="_blank"
+              rel="noreferrer"
+            >
+              <img
+                src={row.original.thumbImage}
+                alt="thumb"
+                width="16"
+                height="16"
+                loading="lazy"
+                className="mr-2"
+              />
+              <span>{value}</span>
+            </a>
+            <a
+              href={row.original.coingeckoLink}
+              target="_blank"
+              rel="noreferrer"
+              className="ml-3"
+            >
+              <img
+                src="https://static.coingecko.com/s/gecko_guide-1ef9afef542eb4df53e9e480bc63a209cd3327410466c903d166e5f7ff7f3644.svg"
+                alt="thumb"
+                width="16"
+                height="16"
+                loading="lazy"
+              />
+            </a>
+          </div>
         ),
       },
       {
@@ -152,6 +177,16 @@ const CoinsTable: FC<Props> = ({ coins }) => {
   const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } =
     tableInstance;
 
+  const [rowIndexHovered, setRowIndexHovered] = useState<number | null>(null);
+
+  const handleMouseHover = (rowIndex: number | null) => {
+    if (rowIndex === null) {
+      setRowIndexHovered(null);
+      return;
+    }
+    setRowIndexHovered(rowIndex);
+  };
+
   return (
     <div className="overflow-x-auto h-[calc(100vh-120px)]">
       <table
@@ -182,10 +217,15 @@ const CoinsTable: FC<Props> = ({ coins }) => {
           ))}
         </thead>
         <tbody {...getTableBodyProps()}>
-          {rows.map((row) => {
+          {rows.map((row, rowIndex) => {
             prepareRow(row);
             return (
-              <tr {...row.getRowProps()}>
+              <tr
+                {...row.getRowProps()}
+                className={rowIndex === rowIndexHovered ? 'active' : ''}
+                onMouseEnter={() => handleMouseHover(rowIndex)}
+                onMouseLeave={() => handleMouseHover(null)}
+              >
                 {row.cells.map((cell, index) => {
                   return (
                     <td
