@@ -12,12 +12,15 @@ type CoinsTableColumns = {
   coin: string;
   price: number;
   atl: number;
+  atlDate?: string;
   ath: number;
+  athDate?: string;
   gains: number;
   marketCap: number | undefined;
   circulatingSupply: number;
   totalSupply: number | null;
   maxSupply: number | null;
+  homePage?: string;
 };
 
 function currencyFormat(num: number, dollarSymbol = true) {
@@ -48,6 +51,7 @@ const CoinsTable: FC<Props> = ({ coins }) => {
         circulatingSupply: coin?.market_data?.circulating_supply,
         totalSupply: coin?.market_data?.total_supply,
         maxSupply: coin?.market_data?.max_supply,
+        homePage: coin?.links.homepage[0],
       })),
     [coins]
   );
@@ -57,6 +61,17 @@ const CoinsTable: FC<Props> = ({ coins }) => {
       {
         Header: 'Coin',
         accessor: 'coin',
+        Cell: ({ row, value }) => (
+          <a
+            className="btn btn-link text-slate-300 font-bold p-0 h-1"
+            href={row.original.homePage}
+            target="_blank"
+            rel="noreferrer"
+          >
+            {' '}
+            {value}{' '}
+          </a>
+        ),
       },
       {
         Header: 'Current Price',
@@ -69,7 +84,7 @@ const CoinsTable: FC<Props> = ({ coins }) => {
         Cell: ({ row, value }) => (
           <div>
             {' '}
-            {currencyFormat(value)} ({(row?.original as any)?.atlDate})
+            {currencyFormat(value)} ({row?.original?.atlDate})
           </div>
         ),
       },
@@ -79,7 +94,7 @@ const CoinsTable: FC<Props> = ({ coins }) => {
         Cell: ({ row, value }) => (
           <div>
             {' '}
-            {currencyFormat(value)} ({(row?.original as any)?.athDate}){' '}
+            {currencyFormat(value)} ({row?.original?.athDate}){' '}
           </div>
         ),
       },
@@ -138,7 +153,7 @@ const CoinsTable: FC<Props> = ({ coins }) => {
     tableInstance;
 
   return (
-    <div className="overflow-x-auto">
+    <div className="overflow-x-auto h-[calc(100vh-120px)]">
       <table
         {...getTableProps()}
         className="table table-zebra table-compact w-full"
@@ -149,7 +164,10 @@ const CoinsTable: FC<Props> = ({ coins }) => {
           {headerGroups.map((headerGroup, index) => (
             <tr {...headerGroup.getHeaderGroupProps()}>
               {headerGroup.headers.map((column) => (
-                <th {...column.getHeaderProps(column.getSortByToggleProps())}>
+                <th
+                  {...column.getHeaderProps(column.getSortByToggleProps())}
+                  className="sticky top-0"
+                >
                   {column.render('Header')}
                   <span>
                     {(column as any).isSorted
@@ -168,9 +186,14 @@ const CoinsTable: FC<Props> = ({ coins }) => {
             prepareRow(row);
             return (
               <tr {...row.getRowProps()}>
-                {row.cells.map((cell) => {
+                {row.cells.map((cell, index) => {
                   return (
-                    <td {...cell.getCellProps()}>{cell.render('Cell')}</td>
+                    <td
+                      className={index === 0 ? 'sticky left-0' : ''}
+                      {...cell.getCellProps()}
+                    >
+                      {cell.render('Cell')}
+                    </td>
                   );
                 })}
               </tr>
