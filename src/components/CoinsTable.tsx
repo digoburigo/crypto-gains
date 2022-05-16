@@ -10,20 +10,20 @@ type Props = {
 
 type CoinsTableColumns = {
   coin: string;
-  price: string;
-  atl: string;
-  ath: string;
-  gains: string;
-  marketCap: string;
-  circulatingSupply: string;
-  totalSupply: string;
-  maxSupply: string;
+  price: number;
+  atl: number;
+  ath: number;
+  gains: number;
+  marketCap: number | undefined;
+  circulatingSupply: number;
+  totalSupply: number | null;
+  maxSupply: number | null;
 };
 
 function currencyFormat(num: number, dollarSymbol = true) {
   return (
     (dollarSymbol ? '$' : '') +
-    num.toFixed(2).replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,')
+    num?.toFixed(2).replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,')
   );
 }
 
@@ -32,28 +32,22 @@ const CoinsTable: FC<Props> = ({ coins }) => {
     () =>
       coins.map((coin) => ({
         coin: `${coin?.name} (${coin?.symbol?.toUpperCase()})`,
-        price: currencyFormat(coin?.market_data?.current_price?.usd || 0),
-        ath: `${currencyFormat(coin?.market_data?.ath?.usd || 0)} (${new Date(
+        price: coin?.market_data?.current_price?.usd || 0,
+        ath: coin?.market_data?.ath?.usd || 0,
+        athDate: new Date(
           coin?.market_data?.ath_date?.usd as string
-        ).toLocaleDateString('pt-BR')})`,
-        atl: `${currencyFormat(coin?.market_data?.atl?.usd || 0)} (${new Date(
+        ).toLocaleDateString('pt-BR'),
+        atl: coin?.market_data?.atl?.usd || 0,
+        atlDate: new Date(
           coin?.market_data?.atl_date?.usd as string
-        ).toLocaleDateString('pt-BR')})`,
+        ).toLocaleDateString('pt-BR'),
         gains:
-          (
-            (coin?.market_data?.ath?.bmd || 1) /
-            (coin?.market_data?.current_price?.usd || 1)
-          ).toFixed(2) + 'x',
-        marketCap: currencyFormat(coin?.market_data?.market_cap?.usd || 0),
-        circulatingSupply: coin?.market_data?.circulating_supply
-          ? currencyFormat(coin?.market_data?.circulating_supply, false)
-          : '∞',
-        totalSupply: coin?.market_data?.total_supply
-          ? currencyFormat(coin?.market_data?.total_supply, false)
-          : '∞',
-        maxSupply: coin?.market_data?.max_supply
-          ? currencyFormat(coin?.market_data?.max_supply, false)
-          : '∞',
+          (coin?.market_data?.ath?.bmd || 1) /
+          (coin?.market_data?.current_price?.usd || 1),
+        marketCap: coin?.market_data?.market_cap?.usd,
+        circulatingSupply: coin?.market_data?.circulating_supply,
+        totalSupply: coin?.market_data?.total_supply,
+        maxSupply: coin?.market_data?.max_supply,
       })),
     [coins]
   );
@@ -67,34 +61,58 @@ const CoinsTable: FC<Props> = ({ coins }) => {
       {
         Header: 'Current Price',
         accessor: 'price',
+        Cell: ({ value }) => <div> {currencyFormat(value)} </div>,
       },
       {
         Header: 'All-Time Low',
         accessor: 'atl',
+        Cell: ({ row, value }) => (
+          <div>
+            {' '}
+            {currencyFormat(value)} ({(row?.original as any)?.atlDate})
+          </div>
+        ),
       },
       {
         Header: 'All-Time High',
         accessor: 'ath',
+        Cell: ({ row, value }) => (
+          <div>
+            {' '}
+            {currencyFormat(value)} ({(row?.original as any)?.athDate}){' '}
+          </div>
+        ),
       },
       {
         Header: 'Gains',
         accessor: 'gains',
+        Cell: ({ value }) => <div> {value.toFixed(2) + 'x'} </div>,
       },
       {
         Header: 'Market Cap',
         accessor: 'marketCap',
+        Cell: ({ value }) => <div> {currencyFormat(value as number)} </div>,
       },
       {
         Header: 'Circulating Supply',
         accessor: 'circulatingSupply',
+        Cell: ({ value }) => (
+          <div> {value ? currencyFormat(value, false) : '∞'} </div>
+        ),
       },
       {
         Header: 'Total Supply',
         accessor: 'totalSupply',
+        Cell: ({ value }) => (
+          <div> {value ? currencyFormat(value, false) : '∞'} </div>
+        ),
       },
       {
         Header: 'Max Supply',
         accessor: 'maxSupply',
+        Cell: ({ value }) => (
+          <div> {value ? currencyFormat(value, false) : '∞'} </div>
+        ),
       },
     ],
     []
