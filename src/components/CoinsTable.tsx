@@ -1,7 +1,10 @@
-import { FC, useMemo, useState } from 'react';
+import type { FC } from 'react';
+import { useMemo, useState } from 'react';
 import type { Column } from 'react-table';
 import { useSortBy, useTable } from 'react-table';
 import type { Coin } from '~api/coingecko';
+import type { Currency } from '~state/system';
+import { useSystemStore } from '~state/system';
 type Props = {
   coins: Coin[];
 };
@@ -23,31 +26,34 @@ type CoinsTableColumns = {
   thumbImage?: string;
 };
 
-function currencyFormat(num: number, dollarSymbol = true) {
-  return (
-    (dollarSymbol ? '$' : '') +
-    num?.toFixed(2).replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,')
-  );
-}
+const currencyFormat = function (number: number, currency?: Currency) {
+  return new Intl.NumberFormat('en-US', {
+    style: 'currency',
+    currency: currency?.code || 'USD',
+    minimumFractionDigits: currency?.decimalPlaces || 2,
+  }).format(number);
+};
 
 const CoinsTable: FC<Props> = ({ coins }) => {
+  const currency = useSystemStore((state) => state.currency);
+
   const data = useMemo(
     () =>
       coins.map((coin) => ({
         coin: `${coin?.name} (${coin?.symbol?.toUpperCase()})`,
-        price: coin?.market_data?.current_price?.usd || 0,
-        ath: coin?.market_data?.ath?.usd || 0,
+        price: coin?.market_data?.current_price?.[currency.code] || 0,
+        ath: coin?.market_data?.ath?.[currency.code] || 0,
         athDate: new Date(
-          coin?.market_data?.ath_date?.usd as string
+          coin?.market_data?.ath_date?.[currency.code] as string
         ).toLocaleDateString('pt-BR'),
-        atl: coin?.market_data?.atl?.usd || 0,
+        atl: coin?.market_data?.atl?.[currency.code] || 0,
         atlDate: new Date(
-          coin?.market_data?.atl_date?.usd as string
+          coin?.market_data?.atl_date?.[currency.code] as string
         ).toLocaleDateString('pt-BR'),
         gains:
-          (coin?.market_data?.ath?.bmd || 1) /
-          (coin?.market_data?.current_price?.usd || 1),
-        marketCap: coin?.market_data?.market_cap?.usd,
+          (coin?.market_data?.ath?.[currency.code] || 1) /
+          (coin?.market_data?.current_price?.[currency.code] || 1),
+        marketCap: coin?.market_data?.market_cap?.[currency.code],
         circulatingSupply: coin?.market_data?.circulating_supply,
         totalSupply: coin?.market_data?.total_supply,
         maxSupply: coin?.market_data?.max_supply,
@@ -55,7 +61,7 @@ const CoinsTable: FC<Props> = ({ coins }) => {
         coingeckoLink: `https://www.coingecko.com/en/coins/${coin.id}`,
         thumbImage: coin.image.thumb,
       })),
-    [coins]
+    [coins, currency]
   );
 
   const columns = useMemo<Column<CoinsTableColumns>[]>(
@@ -66,7 +72,7 @@ const CoinsTable: FC<Props> = ({ coins }) => {
         Cell: ({ row, value }) => (
           <div className="flex justify-start items-center">
             <a
-              className="btn btn-link text-slate-300 font-bold p-0 h-1"
+              className="btn btn-link text-slate-300 font-bold p-0 h-1 text-xs"
               href={row.original.homePage}
               target="_blank"
               rel="noreferrer"
@@ -101,7 +107,7 @@ const CoinsTable: FC<Props> = ({ coins }) => {
       {
         Header: 'Current Price',
         accessor: 'price',
-        Cell: ({ value }) => <div> {currencyFormat(value)} </div>,
+        Cell: ({ value }) => <div> {currencyFormat(value, currency)} </div>,
       },
       {
         Header: 'All-Time Low',
@@ -109,7 +115,7 @@ const CoinsTable: FC<Props> = ({ coins }) => {
         Cell: ({ row, value }) => (
           <div>
             {' '}
-            {currencyFormat(value)} ({row?.original?.atlDate})
+            {currencyFormat(value, currency)} ({row?.original?.atlDate})
           </div>
         ),
       },
@@ -119,7 +125,7 @@ const CoinsTable: FC<Props> = ({ coins }) => {
         Cell: ({ row, value }) => (
           <div>
             {' '}
-            {currencyFormat(value)} ({row?.original?.athDate}){' '}
+            {currencyFormat(value, currency)} ({row?.original?.athDate}){' '}
           </div>
         ),
       },
@@ -131,31 +137,27 @@ const CoinsTable: FC<Props> = ({ coins }) => {
       {
         Header: 'Market Cap',
         accessor: 'marketCap',
-        Cell: ({ value }) => <div> {currencyFormat(value as number)} </div>,
+        Cell: ({ value }) => (
+          <div> {currencyFormat(value as number, currency)} </div>
+        ),
       },
       {
         Header: 'Circulating Supply',
         accessor: 'circulatingSupply',
-        Cell: ({ value }) => (
-          <div> {value ? currencyFormat(value, false) : '∞'} </div>
-        ),
+        Cell: ({ value }) => <div> {value ? currencyFormat(value) : '∞'} </div>,
       },
       {
         Header: 'Total Supply',
         accessor: 'totalSupply',
-        Cell: ({ value }) => (
-          <div> {value ? currencyFormat(value, false) : '∞'} </div>
-        ),
+        Cell: ({ value }) => <div> {value ? currencyFormat(value) : '∞'} </div>,
       },
       {
         Header: 'Max Supply',
         accessor: 'maxSupply',
-        Cell: ({ value }) => (
-          <div> {value ? currencyFormat(value, false) : '∞'} </div>
-        ),
+        Cell: ({ value }) => <div> {value ? currencyFormat(value) : '∞'} </div>,
       },
     ],
-    []
+    [currency]
   );
 
   const tableInstance = useTable(
