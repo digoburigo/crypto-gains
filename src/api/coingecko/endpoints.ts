@@ -33,6 +33,7 @@ const COINS_IDS = [
   'gmx',
   'looksrare',
   'energy-web-token',
+  'unibright',
   'liquity',
   'aurora-near',
   'ocean-protocol',
