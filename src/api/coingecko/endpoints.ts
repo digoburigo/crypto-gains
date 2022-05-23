@@ -1,7 +1,5 @@
 import type { Coin } from './types';
 
-const COINGECKO_API = 'https://api.coingecko.com/api/v3';
-
 // https://docs.google.com/spreadsheets/d/1wTTuxXt8n9q7C4NDXqQpI3wpKu1_5bGVmP9Xz0XGSyU
 const COINS_IDS = [
   'bitcoin',
@@ -59,18 +57,20 @@ export const COINS_QUERIES = COINS_IDS.map((id) => {
   };
 });
 
-export const COINS_FETCH_QUERIES = COINS_IDS.map((id) => {
+export const COINS_FETCH_QUERIES = COINS_IDS2.map((id) => {
   return getCoinById(id);
 });
 
 export async function ping() {
-  const response = await fetch(`${COINGECKO_API}/ping`);
+  const response = await fetch(`${process.env.COINGECKO_API}/api/v3/ping`);
   const data = await response.json();
   return data;
 }
 
 export async function getCoinById(id: string): Promise<Coin> {
-  const response = await fetch(`${COINGECKO_API}/coins/${id}`);
+  const response = await fetch(
+    `${process.env.COINGECKO_API}/api/v3/coins/${id}`
+  );
   const data = await response.json();
   return data;
 }

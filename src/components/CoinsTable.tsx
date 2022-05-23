@@ -26,12 +26,20 @@ type CoinsTableColumns = {
   thumbImage?: string;
 };
 
-const currencyFormat = function (number: number, currency?: Currency) {
+const currencyFormat = ({
+  value,
+  currency,
+  decimalPlaces,
+}: {
+  value: number;
+  currency?: Currency;
+  decimalPlaces?: number;
+}) => {
   return new Intl.NumberFormat('en-US', {
-    style: 'currency',
+    style: currency ? 'currency' : 'decimal',
     currency: currency?.code || 'USD',
-    minimumFractionDigits: currency?.decimalPlaces || 2,
-  }).format(number);
+    minimumFractionDigits: decimalPlaces ?? currency?.decimalPlaces ?? 2,
+  }).format(value);
 };
 
 const CoinsTable: FC<Props> = ({ coins }) => {
@@ -107,7 +115,7 @@ const CoinsTable: FC<Props> = ({ coins }) => {
       {
         Header: 'Current Price',
         accessor: 'price',
-        Cell: ({ value }) => <div> {currencyFormat(value, currency)} </div>,
+        Cell: ({ value }) => <div> {currencyFormat({ value, currency })} </div>,
       },
       {
         Header: 'All-Time Low',
@@ -115,7 +123,7 @@ const CoinsTable: FC<Props> = ({ coins }) => {
         Cell: ({ row, value }) => (
           <div>
             {' '}
-            {currencyFormat(value, currency)} ({row?.original?.atlDate})
+            {currencyFormat({ value, currency })} ({row?.original?.atlDate})
           </div>
         ),
       },
@@ -125,7 +133,7 @@ const CoinsTable: FC<Props> = ({ coins }) => {
         Cell: ({ row, value }) => (
           <div>
             {' '}
-            {currencyFormat(value, currency)} ({row?.original?.athDate}){' '}
+            {currencyFormat({ value, currency })} ({row?.original?.athDate}){' '}
           </div>
         ),
       },
@@ -138,23 +146,34 @@ const CoinsTable: FC<Props> = ({ coins }) => {
         Header: 'Market Cap',
         accessor: 'marketCap',
         Cell: ({ value }) => (
-          <div> {currencyFormat(value as number, currency)} </div>
+          <div>
+            {' '}
+            {currencyFormat({ value, currency, decimalPlaces: 2 } as {
+              value: number;
+            })}{' '}
+          </div>
         ),
       },
       {
         Header: 'Circulating Supply',
         accessor: 'circulatingSupply',
-        Cell: ({ value }) => <div> {value ? currencyFormat(value) : '∞'} </div>,
+        Cell: ({ value }) => (
+          <div> {value ? currencyFormat({ value }) : '∞'} </div>
+        ),
       },
       {
         Header: 'Total Supply',
         accessor: 'totalSupply',
-        Cell: ({ value }) => <div> {value ? currencyFormat(value) : '∞'} </div>,
+        Cell: ({ value }) => (
+          <div> {value ? currencyFormat({ value }) : '∞'} </div>
+        ),
       },
       {
         Header: 'Max Supply',
         accessor: 'maxSupply',
-        Cell: ({ value }) => <div> {value ? currencyFormat(value) : '∞'} </div>,
+        Cell: ({ value }) => (
+          <div> {value ? currencyFormat({ value }) : '∞'} </div>
+        ),
       },
     ],
     [currency]
@@ -190,7 +209,7 @@ const CoinsTable: FC<Props> = ({ coins }) => {
   };
 
   return (
-    <div className="overflow-x-auto h-[calc(100vh-120px)]">
+    <div className="overflow-x-auto h-[calc(100vh-140px)]">
       <table
         {...getTableProps()}
         className="table table-zebra table-compact w-full"

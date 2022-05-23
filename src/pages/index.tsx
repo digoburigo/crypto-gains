@@ -1,5 +1,6 @@
 import type { NextPage, NextPageContext } from 'next';
-import { Coin, COINS_FETCH_QUERIES } from '~api/coingecko';
+import type { Coin } from '~api/coingecko';
+import { COINS_FETCH_QUERIES } from '~api/coingecko';
 import CoinsTable from '~components/CoinsTable';
 import CurrencyDropdown from '~components/CurrencyDropdown';
 import { CURRENCIES } from '~state/system';

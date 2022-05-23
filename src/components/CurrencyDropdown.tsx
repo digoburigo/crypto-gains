@@ -16,7 +16,7 @@ const CurrencyDropdown: FC<Props> = ({ currencies }) => {
       </label>
       <ul
         tabIndex={0}
-        className="dropdown-content menu p-2 shadow bg-base-100 rounded-box w-52"
+        className="dropdown-content menu p-2 shadow bg-base-200 rounded-box w-52"
       >
         {currencies.map((currency, index) => (
           <li key={index} onClick={() => setCurrency(currency)}>

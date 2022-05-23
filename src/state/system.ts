@@ -19,5 +19,5 @@ export type SystemState = {
 
 export const useSystemStore = create<SystemState>((set) => ({
   currency: CURRENCIES[0] as Currency,
-  setCurrency: (currency: Currency) => set((state) => ({ currency })),
+  setCurrency: (currency: Currency) => set(() => ({ currency })),
 }));
