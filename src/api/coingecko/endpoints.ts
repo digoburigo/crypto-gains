@@ -7,9 +7,7 @@ const COINS_IDS = [
   'cardano',
   'solana',
   'polkadot',
-  // 'dogecoin',
   'avalanche-2',
-  // 'shiba-inu',
   'matic-network',
   'near',
   'chainlink',
@@ -48,16 +46,12 @@ const COINS_IDS = [
   'notional-finance',
 ];
 
-const COINS_IDS2 = ['bitcoin'];
+const COINS_IDS_TEST = ['bitcoin'];
 
-export const COINS_QUERIES = COINS_IDS.map((id) => {
-  return {
-    queryKey: ['getCoinById', id],
-    queryFn: () => getCoinById(id),
-  };
-});
+const COINS_TO_USE =
+  process.env.NODE_ENV === 'production' ? COINS_IDS : COINS_IDS_TEST;
 
-export const COINS_FETCH_QUERIES = COINS_IDS2.map((id) => {
+export const COINS_FETCH_QUERIES = COINS_TO_USE.map((id) => {
   return getCoinById(id);
 });
 
