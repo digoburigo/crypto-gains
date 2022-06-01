@@ -22,6 +22,7 @@ const COINS_IDS = [
   'waves',
   'kusama',
   'havven',
+  'the-graph',
   'loopring',
   'pax-gold',
   'osmosis',
