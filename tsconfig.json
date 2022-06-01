@@ -14,7 +14,13 @@
     "isolatedModules": true,
     "jsx": "preserve",
     "incremental": false,
-    "noUncheckedIndexedAccess": true
+    "noUncheckedIndexedAccess": true,
+    "baseUrl": ".",
+    "paths": {
+      "~api/*": ["src/api/*"],
+      "~components/*": ["src/components/*"],
+      "~state/*": ["src/state/*"]
+    }
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"],
   "exclude": ["node_modules"]
