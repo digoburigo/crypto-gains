@@ -1,3 +1,10 @@
+// import {
+//   createTable,
+//   getCoreRowModel,
+//   getSortedRowModel,
+//   SortingState,
+//   useTableInstance,
+// } from '@tanstack/react-table';
 import type { FC } from 'react';
 import { useMemo, useState } from 'react';
 import type { Column } from 'react-table';
@@ -25,6 +32,8 @@ type CoinsTableColumns = {
   coingeckoLink?: string;
   thumbImage?: string;
 };
+
+// const table = createTable().setRowType<CoinsTableColumns>();
 
 const currencyFormat = ({
   value,
@@ -178,6 +187,128 @@ const CoinsTable: FC<Props> = ({ coins }) => {
     ],
     [currency]
   );
+
+  // const columns2 = useMemo(
+  //   () => [
+  //     table.createDataColumn('coin', {
+  //       header: 'Coin',
+  //       cell: ({ row, getValue }) => (
+  //         <div className="flex justify-start items-center">
+  //           <a
+  //             className="btn btn-link text-slate-300 font-bold p-0 h-1 text-xs"
+  //             href={row?.original?.homePage}
+  //             target="_blank"
+  //             rel="noreferrer"
+  //           >
+  //             <img
+  //               src={row?.original?.thumbImage}
+  //               alt="thumb"
+  //               width="16"
+  //               height="16"
+  //               loading="lazy"
+  //               className="mr-2"
+  //             />
+  //             <span>{getValue()}</span>
+  //           </a>
+  //           <a
+  //             href={row?.original?.coingeckoLink}
+  //             target="_blank"
+  //             rel="noreferrer"
+  //             className="ml-3"
+  //           >
+  //             <img
+  //               src="https://static.coingecko.com/s/gecko_guide-1ef9afef542eb4df53e9e480bc63a209cd3327410466c903d166e5f7ff7f3644.svg"
+  //               alt="thumb"
+  //               width="16"
+  //               height="16"
+  //               loading="lazy"
+  //             />
+  //           </a>
+  //         </div>
+  //       ),
+  //     }),
+  //     table.createDataColumn('price', {
+  //       header: 'Price',
+  //       cell: ({ getValue }) => (
+  //         <div> {currencyFormat({ value: getValue(), currency })} </div>
+  //       ),
+  //     }),
+  //     table.createDataColumn('atl', {
+  //       header: 'Profile Progress',
+  //       cell: ({ row, getValue }) => (
+  //         <div>
+  //           {currencyFormat({ value: getValue(), currency })} (
+  //           {row?.original?.atlDate})
+  //         </div>
+  //       ),
+  //     }),
+  //     table.createDataColumn('ath', {
+  //       header: 'All-Time High',
+  //       cell: ({ row, getValue }) => (
+  //         <div>
+  //           {currencyFormat({ value: getValue(), currency })} (
+  //           {row?.original?.athDate})
+  //         </div>
+  //       ),
+  //     }),
+  //     table.createDataColumn('gains', {
+  //       header: 'Gains',
+  //       cell: ({ getValue }) => <div> {getValue().toFixed(2) + 'x'} </div>,
+  //     }),
+  //     table.createDataColumn('marketCap', {
+  //       header: 'Market Cap',
+  //       cell: ({ getValue }) => (
+  //         <div>
+  //           {currencyFormat({
+  //             value: getValue(),
+  //             currency,
+  //             decimalPlaces: 2,
+  //           } as {
+  //             value: number;
+  //           })}
+  //         </div>
+  //       ),
+  //     }),
+  //     table.createDataColumn('circulatingSupply', {
+  //       header: 'Circulating Supply',
+  //       cell: ({ getValue }) => (
+  //         <div>
+  //           {getValue() ? currencyFormat({ value: getValue() as number }) : '∞'}
+  //         </div>
+  //       ),
+  //     }),
+  //     table.createDataColumn('totalSupply', {
+  //       header: 'Total Supply',
+  //       cell: ({ getValue }) => (
+  //         <div>
+  //           {getValue() ? currencyFormat({ value: getValue() as number }) : '∞'}
+  //         </div>
+  //       ),
+  //     }),
+  //     table.createDataColumn('maxSupply', {
+  //       header: 'Max Supply',
+  //       cell: ({ getValue }) => (
+  //         <div>
+  //           {getValue() ? currencyFormat({ value: getValue() as number }) : '∞'}
+  //         </div>
+  //       ),
+  //     }),
+  //   ],
+  //   [currency]
+  // );
+
+  // const [sorting, setSorting] = useState<SortingState>([]);
+
+  // const instance = useTableInstance(table, {
+  //   data,
+  //   columns: columns2,
+  //   state: {
+  //     sorting,
+  //   },
+  //   onSortingChange: setSorting,
+  //   getCoreRowModel: getCoreRowModel(),
+  //   getSortedRowModel: getSortedRowModel(),
+  // });
 
   const tableInstance = useTable(
     {
