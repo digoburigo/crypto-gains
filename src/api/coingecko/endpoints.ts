@@ -46,6 +46,14 @@ const COINS_IDS = [
   'singularitydao',
   'goldfinch',
   'notional-finance',
+  'serum',
+  'acala',
+  'filecoin',
+  'arweave',
+  'moonbeam',
+  'astar',
+  'olympus',
+  'evmos',
 ];
 
 const COINS_IDS_TEST = ['bitcoin'];
