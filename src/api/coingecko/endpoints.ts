@@ -62,28 +62,10 @@ const COINS_IDS_TEST = ['bitcoin', 'ethereum'];
 const COINS_TO_USE =
   process.env.NODE_ENV === 'production' ? COINS_IDS : COINS_IDS_TEST;
 
-export const COINS_FETCH_QUERIES = COINS_TO_USE.map((id) => {
-  return getCoinById(id);
+export const COINS_QUERIES = COINS_TO_USE.map((id) => {
+  return { queryKey: ['coin', id], queryFn: () => getCoinById(id) };
 });
 
-export const COINS_QUERIES = COINS_IDS.map((id) => {
-  return { queryKey: ['coin', id], queryFn: () => getCoinById2(id) };
-});
-
-export async function ping() {
-  const response = await fetch(`${process.env.COINGECKO_API}/api/v3/ping`);
-  const data = await response.json();
-  return data;
-}
-
-export async function getCoinById(id: string): Promise<Coin> {
-  const response = await fetch(
-    `${process.env.COINGECKO_API}/api/v3/coins/${id}`
-  );
-  const data = await response.json();
-  return data;
-}
-
-export function getCoinById2(id: string): Promise<Coin> {
+export function getCoinById(id: string): Promise<Coin> {
   return fetch(`${COINGECKO_API}/api/v3/coins/${id}`).then((res) => res.json());
 }
