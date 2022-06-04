@@ -1,30 +1,14 @@
-import type { NextPage, NextPageContext } from 'next';
+import type { NextPage } from 'next';
+import { useQueries } from 'react-query';
 import type { Coin } from '~api/coingecko';
-import { COINS_FETCH_QUERIES } from '~api/coingecko';
+import { COINS_QUERIES } from '~api/coingecko';
 import CoinsTable from '~components/CoinsTable';
 import CurrencyDropdown from '~components/CurrencyDropdown';
 import { CURRENCIES } from '~state/system';
 
-type Props = {
-  coins: Coin[];
-};
+const Home: NextPage = () => {
+  const coins = useQueries(COINS_QUERIES).map((query) => query.data) as Coin[];
 
-export async function getServerSideProps({ req, res }: NextPageContext) {
-  res?.setHeader(
-    'Cache-Control',
-    'public, s-maxage=30, stale-while-revalidate=59'
-  );
-
-  const coins = await Promise.all(COINS_FETCH_QUERIES);
-
-  return {
-    props: {
-      coins,
-    },
-  };
-}
-
-const Home: NextPage<Props> = ({ coins }) => {
   return (
     <div className="container mx-auto p-4 pt-8">
       <div className="flex justify-between items-center mb-8">

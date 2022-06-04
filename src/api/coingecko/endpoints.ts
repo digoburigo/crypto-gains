@@ -1,4 +1,5 @@
 import type { Coin } from './types';
+export const COINGECKO_API = 'https://api.coingecko.com';
 
 // https://docs.google.com/spreadsheets/d/1wTTuxXt8n9q7C4NDXqQpI3wpKu1_5bGVmP9Xz0XGSyU
 const COINS_IDS = [
@@ -56,13 +57,17 @@ const COINS_IDS = [
   'evmos',
 ];
 
-const COINS_IDS_TEST = ['bitcoin'];
+const COINS_IDS_TEST = ['bitcoin', 'ethereum'];
 
 const COINS_TO_USE =
   process.env.NODE_ENV === 'production' ? COINS_IDS : COINS_IDS_TEST;
 
 export const COINS_FETCH_QUERIES = COINS_TO_USE.map((id) => {
   return getCoinById(id);
+});
+
+export const COINS_QUERIES = COINS_IDS.map((id) => {
+  return { queryKey: ['coin', id], queryFn: () => getCoinById2(id) };
 });
 
 export async function ping() {
@@ -77,4 +82,8 @@ export async function getCoinById(id: string): Promise<Coin> {
   );
   const data = await response.json();
   return data;
+}
+
+export function getCoinById2(id: string): Promise<Coin> {
+  return fetch(`${COINGECKO_API}/api/v3/coins/${id}`).then((res) => res.json());
 }

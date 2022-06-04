@@ -5,6 +5,7 @@ import { useSortBy, useTable } from 'react-table';
 import type { Coin } from '~api/coingecko';
 import type { Currency } from '~state/system';
 import { useSystemStore } from '~state/system';
+
 type Props = {
   coins: Coin[];
 };
@@ -66,8 +67,8 @@ const CoinsTable: FC<Props> = ({ coins }) => {
         totalSupply: coin?.market_data?.total_supply,
         maxSupply: coin?.market_data?.max_supply,
         homePage: coin?.links?.homepage[0],
-        coingeckoLink: `https://www.coingecko.com/en/coins/${coin.id}`,
-        thumbImage: coin.image.thumb,
+        coingeckoLink: `https://www.coingecko.com/en/coins/${coin?.id}`,
+        thumbImage: coin?.image?.thumb,
       })),
     [coins, currency]
   );
