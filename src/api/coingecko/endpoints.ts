@@ -46,6 +46,7 @@ const COINS_IDS = [
   'singularitydao',
   'goldfinch',
   'notional-finance',
+  'helium',
 ];
 
 const COINS_IDS_TEST = ['bitcoin'];
