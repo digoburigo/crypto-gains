@@ -1,4 +1,5 @@
 import type { Coin } from './types';
+export const COINGECKO_API = 'https://api.coingecko.com';
 
 // https://docs.google.com/spreadsheets/d/1wTTuxXt8n9q7C4NDXqQpI3wpKu1_5bGVmP9Xz0XGSyU
 const COINS_IDS = [
@@ -47,27 +48,25 @@ const COINS_IDS = [
   'goldfinch',
   'notional-finance',
   'helium',
+  'serum',
+  'acala',
+  'filecoin',
+  'arweave',
+  'moonbeam',
+  'astar',
+  'olympus',
+  'evmos',
 ];
 
-const COINS_IDS_TEST = ['bitcoin'];
+const COINS_IDS_TEST = ['bitcoin', 'ethereum'];
 
 const COINS_TO_USE =
   process.env.NODE_ENV === 'production' ? COINS_IDS : COINS_IDS_TEST;
 
-export const COINS_FETCH_QUERIES = COINS_TO_USE.map((id) => {
-  return getCoinById(id);
+export const COINS_QUERIES = COINS_TO_USE.map((id) => {
+  return { queryKey: ['coin', id], queryFn: () => getCoinById(id) };
 });
 
-export async function ping() {
-  const response = await fetch(`${process.env.COINGECKO_API}/api/v3/ping`);
-  const data = await response.json();
-  return data;
-}
-
-export async function getCoinById(id: string): Promise<Coin> {
-  const response = await fetch(
-    `${process.env.COINGECKO_API}/api/v3/coins/${id}`
-  );
-  const data = await response.json();
-  return data;
+export function getCoinById(id: string): Promise<Coin> {
+  return fetch(`${COINGECKO_API}/api/v3/coins/${id}`).then((res) => res.json());
 }
