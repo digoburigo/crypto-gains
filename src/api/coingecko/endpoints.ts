@@ -53,6 +53,7 @@ const COINS_IDS = [
   'filecoin',
   'arweave',
   'moonbeam',
+  'linkpool',
   'astar',
   'olympus',
   'evmos',
