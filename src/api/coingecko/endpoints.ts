@@ -56,6 +56,7 @@ const COINS_IDS = [
   'linkpool',
   'astar',
   'olympus',
+  'origin-protocol',
   'evmos',
 ];
 
