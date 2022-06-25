@@ -47,14 +47,17 @@ const COINS_IDS = [
   'singularitydao',
   'goldfinch',
   'notional-finance',
+  'helium',
   'serum',
   'acala',
   'filecoin',
   'arweave',
   'moonbeam',
+  'linkpool',
   'astar',
   'storj',
   'olympus',
+  'origin-protocol',
   'evmos',
 ];
 
