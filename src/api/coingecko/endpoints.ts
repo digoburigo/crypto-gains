@@ -53,6 +53,7 @@ const COINS_IDS = [
   'arweave',
   'moonbeam',
   'astar',
+  'storj',
   'olympus',
   'evmos',
 ];
