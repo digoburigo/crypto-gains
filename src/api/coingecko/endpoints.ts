@@ -59,6 +59,7 @@ const COINS_IDS = [
   'olympus',
   'origin-protocol',
   'evmos',
+  '1inch',
 ];
 
 const COINS_IDS_TEST = ['bitcoin', 'ethereum'];
