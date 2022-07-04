@@ -2,7 +2,7 @@ import create from 'zustand';
 
 export type Currency = {
   label: string;
-  code: 'usd' | 'btc';
+  code: 'usd' | 'btc' | 'eth';
   symbol: string;
   decimalPlaces: number;
 };
@@ -10,6 +10,7 @@ export type Currency = {
 export const CURRENCIES: Currency[] = [
   { label: 'US Dollar', code: 'usd', symbol: '$', decimalPlaces: 2 },
   { label: 'Bitcoin', code: 'btc', symbol: '₿', decimalPlaces: 8 },
+  { label: 'Ethereum', code: 'eth', symbol: 'Ξ', decimalPlaces: 8 },
 ];
 
 export type SystemState = {
