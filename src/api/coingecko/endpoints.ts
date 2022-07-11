@@ -64,6 +64,7 @@ const COINS_IDS = [
   'compound',
   'maker',
   'convex-finance',
+  'numeraire',
 ];
 
 const COINS_IDS_TEST = ['bitcoin', 'ethereum'];
@@ -71,7 +72,7 @@ const COINS_IDS_TEST = ['bitcoin', 'ethereum'];
 const COINS_TO_USE =
   process.env.NODE_ENV === 'production' ? COINS_IDS : COINS_IDS_TEST;
 
-export const COINS_QUERIES = COINS_TO_USE.map((id) => {
+export const COINS_QUERIES = COINS_IDS.map((id) => {
   return { queryKey: ['coin', id], queryFn: () => getCoinById(id) };
 });
 

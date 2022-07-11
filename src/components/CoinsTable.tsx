@@ -18,6 +18,7 @@ type CoinsTableColumns = {
   ath: number;
   athDate?: string;
   gains: number;
+  potential: number;
   marketCap: number | undefined;
   circulatingSupply: number;
   totalSupply: number | null;
@@ -48,28 +49,42 @@ const CoinsTable: FC<Props> = ({ coins }) => {
 
   const data = useMemo(
     () =>
-      coins.map((coin) => ({
-        coin: `${coin?.name} (${coin?.symbol?.toUpperCase()})`,
-        price: coin?.market_data?.current_price?.[currency.code] || 0,
-        ath: coin?.market_data?.ath?.[currency.code] || 0,
-        athDate: new Date(
-          coin?.market_data?.ath_date?.[currency.code] as string
-        ).toLocaleDateString('pt-BR'),
-        atl: coin?.market_data?.atl?.[currency.code] || 0,
-        atlDate: new Date(
-          coin?.market_data?.atl_date?.[currency.code] as string
-        ).toLocaleDateString('pt-BR'),
-        gains:
+      coins.map((coin) => {
+        const atlByCurrentPrice =
+          (coin?.market_data?.atl?.[currency.code] || 1) /
+          (coin?.market_data?.current_price?.[currency.code] || 1);
+        const athByCurrentPrice =
           (coin?.market_data?.ath?.[currency.code] || 1) /
-          (coin?.market_data?.current_price?.[currency.code] || 1),
-        marketCap: coin?.market_data?.market_cap?.[currency.code],
-        circulatingSupply: coin?.market_data?.circulating_supply,
-        totalSupply: coin?.market_data?.total_supply,
-        maxSupply: coin?.market_data?.max_supply,
-        homePage: coin?.links?.homepage[0],
-        coingeckoLink: `https://www.coingecko.com/en/coins/${coin?.id}`,
-        thumbImage: coin?.image?.thumb,
-      })),
+          (coin?.market_data?.current_price?.[currency.code] || 1);
+        const potential =
+          (atlByCurrentPrice > 0.1 && atlByCurrentPrice < 1.5
+            ? atlByCurrentPrice
+            : 0) * athByCurrentPrice;
+
+        return {
+          coin: `${coin?.name} (${coin?.symbol?.toUpperCase()})`,
+          price: coin?.market_data?.current_price?.[currency.code] || 0,
+          ath: coin?.market_data?.ath?.[currency.code] || 0,
+          athDate: new Date(
+            coin?.market_data?.ath_date?.[currency.code] as string
+          ).toLocaleDateString('pt-BR'),
+          atl: coin?.market_data?.atl?.[currency.code] || 0,
+          atlDate: new Date(
+            coin?.market_data?.atl_date?.[currency.code] as string
+          ).toLocaleDateString('pt-BR'),
+          potential,
+          gains:
+            (coin?.market_data?.ath?.[currency.code] || 1) /
+            (coin?.market_data?.current_price?.[currency.code] || 1),
+          marketCap: coin?.market_data?.market_cap?.[currency.code],
+          circulatingSupply: coin?.market_data?.circulating_supply,
+          totalSupply: coin?.market_data?.total_supply,
+          maxSupply: coin?.market_data?.max_supply,
+          homePage: coin?.links?.homepage[0],
+          coingeckoLink: `https://www.coingecko.com/en/coins/${coin?.id}`,
+          thumbImage: coin?.image?.thumb,
+        };
+      }),
     [coins, currency]
   );
 
@@ -144,6 +159,11 @@ const CoinsTable: FC<Props> = ({ coins }) => {
         Cell: ({ value }) => <div> {value.toFixed(2) + 'x'} </div>,
       },
       {
+        Header: 'Potential',
+        accessor: 'potential',
+        Cell: ({ value }) => <div> {value.toFixed(0)} </div>,
+      },
+      {
         Header: 'Market Cap',
         accessor: 'marketCap',
         Cell: ({ value }) => (
@@ -210,7 +230,7 @@ const CoinsTable: FC<Props> = ({ coins }) => {
   };
 
   return (
-    <div className="overflow-x-auto h-[calc(100vh-140px)]">
+    <div className="overflow-x-auto h-[calc(100vh-160px)]">
       <table
         {...getTableProps()}
         className="table table-zebra table-compact w-full"
