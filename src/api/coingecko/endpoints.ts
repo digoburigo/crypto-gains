@@ -60,6 +60,10 @@ const COINS_IDS = [
   'origin-protocol',
   'evmos',
   '1inch',
+  'curve-dao-token',
+  'compound',
+  'maker',
+  'convex-finance',
 ];
 
 const COINS_IDS_TEST = ['bitcoin', 'ethereum'];
