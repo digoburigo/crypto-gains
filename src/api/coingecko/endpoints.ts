@@ -61,7 +61,7 @@ const COINS_IDS = [
   'evmos',
   '1inch',
   'curve-dao-token',
-  'compound',
+  'compound-governance-token',
   'maker',
   'convex-finance',
   'numeraire',
