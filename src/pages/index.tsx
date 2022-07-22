@@ -1,5 +1,5 @@
+import { useQueries } from '@tanstack/react-query';
 import type { NextPage } from 'next';
-import { useQueries } from 'react-query';
 import type { Coin } from '~api/coingecko';
 import { COINS_QUERIES } from '~api/coingecko';
 import CoinsTable from '~components/CoinsTable';
@@ -7,7 +7,9 @@ import CurrencyDropdown from '~components/CurrencyDropdown';
 import { CURRENCIES } from '~state/system';
 
 const Home: NextPage = () => {
-  const coins = useQueries(COINS_QUERIES).map((query) => query.data) as Coin[];
+  const coins = useQueries({ queries: COINS_QUERIES }).map(
+    (query) => query.data
+  ) as Coin[];
 
   return (
     <div className="container mx-auto p-4 pt-8">
