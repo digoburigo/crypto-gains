@@ -60,6 +60,10 @@ const COINS_IDS = [
   'origin-protocol',
   'evmos',
   '1inch',
+  'curve-dao-token',
+  'compound-governance-token',
+  'maker',
+  'convex-finance',
   'numeraire',
   'lyra-finance',
 ];
