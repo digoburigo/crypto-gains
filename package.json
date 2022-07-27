@@ -10,15 +10,15 @@
   },
   "dependencies": {
     "@tanstack/react-query": "^4.0.10",
-    "daisyui": "^2.19.1",
+    "daisyui": "^2.20.0",
     "next": "12.2.3",
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "react-table": "^7.8.0",
-    "zustand": "4.0.0-rc.4"
+    "zustand": "4.0.0"
   },
   "devDependencies": {
-    "@types/node": "18.0.6",
+    "@types/node": "18.6.1",
     "@types/react": "18.0.15",
     "@types/react-dom": "18.0.6",
     "@types/react-table": "^7.7.12",

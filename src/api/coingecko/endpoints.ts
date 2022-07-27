@@ -66,6 +66,7 @@ const COINS_IDS = [
   'convex-finance',
   'numeraire',
   'lyra-finance',
+  'radicle',
 ];
 
 const COINS_IDS_TEST = ['bitcoin', 'ethereum'];
