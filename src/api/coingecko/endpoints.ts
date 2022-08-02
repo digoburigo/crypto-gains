@@ -67,6 +67,8 @@ const COINS_IDS = [
   'numeraire',
   'lyra-finance',
   'radicle',
+  'livepeer',
+  'theta-network',
 ];
 
 const COINS_IDS_TEST = ['bitcoin', 'ethereum'];
