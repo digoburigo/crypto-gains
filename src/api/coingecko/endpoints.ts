@@ -71,6 +71,7 @@ const COINS_IDS = [
   'theta-token',
   'ergo',
   'gains-network',
+  'hedera',
 ];
 
 const COINS_IDS_TEST = ['bitcoin', 'ethereum'];
