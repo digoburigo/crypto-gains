@@ -1,8 +1,8 @@
 lockfileVersion: 5.4
 
 specifiers:
-  '@tanstack/react-query': ^4.1.0
-  '@types/node': 18.7.2
+  '@tanstack/react-query': ^4.1.3
+  '@types/node': 18.7.3
   '@types/react': 18.0.17
   '@types/react-dom': 18.0.6
   '@types/react-table': ^7.7.12
@@ -20,7 +20,7 @@ specifiers:
   zustand: 4.0.0
 
 dependencies:
-  '@tanstack/react-query': 4.1.0_biqbaboplfbrettd7655fr4n2y
+  '@tanstack/react-query': 4.1.3_biqbaboplfbrettd7655fr4n2y
   daisyui: 2.24.0_25hquoklqeoqwmt7fwvvcyxm5e
   next: 12.2.5_biqbaboplfbrettd7655fr4n2y
   react: 18.2.0
@@ -29,7 +29,7 @@ dependencies:
   zustand: 4.0.0_react@18.2.0
 
 devDependencies:
-  '@types/node': 18.7.2
+  '@types/node': 18.7.3
   '@types/react': 18.0.17
   '@types/react-dom': 18.0.6
   '@types/react-table': 7.7.12
@@ -252,8 +252,8 @@ packages:
     resolution: {integrity: sha512-9LsABpZXkWZHi4P1ozRETEDXQocLAxVzQaIhganxbNuz/uA3PsCAJxJTiQrknG5htLMzOF5MqM9G10e6DCxV1A==}
     dev: false
 
-  /@tanstack/react-query/4.1.0_biqbaboplfbrettd7655fr4n2y:
-    resolution: {integrity: sha512-ZwPCqVoCqvUvTfmvpPlC6apyrvV4JmK1XsesreFs9TxZmASyRvj9Dk1Z++ct6m5lniccDssnLOo+36E1EAi/nA==}
+  /@tanstack/react-query/4.1.3_biqbaboplfbrettd7655fr4n2y:
+    resolution: {integrity: sha512-BHI/dV3LOuVOZAaifM6u680Wi5rmiHu4aD3WkvrQT/9fYhHDhTzMdJO8l2Xh0UR7JhM8e9O3f89SJhD3T8Ejgw==}
     peerDependencies:
       react: ^16.8.0 || ^17.0.0 || ^18.0.0
       react-dom: ^16.8.0 || ^17.0.0 || ^18.0.0
@@ -275,8 +275,8 @@ packages:
     resolution: {integrity: sha512-dRLjCWHYg4oaA77cxO64oO+7JwCwnIzkZPdrrC71jQmQtlhM556pwKo5bUzqvZndkVbeFLIIi+9TC40JNF5hNQ==}
     dev: true
 
-  /@types/node/18.7.2:
-    resolution: {integrity: sha512-ce7MIiaYWCFv6A83oEultwhBXb22fxwNOQf5DIxWA4WXvDQ7K+L0fbWl/YOfCzlR5B/uFkSnVBhPcOfOECcWvA==}
+  /@types/node/18.7.3:
+    resolution: {integrity: sha512-LJgzOEwWuMTBxHzgBR/fhhBOWrvBjvO+zPteUgbbuQi80rYIZHrk1mNbRUqPZqSLP2H7Rwt1EFLL/tNLD1Xx/w==}
     dev: true
 
   /@types/prop-types/15.7.5:
