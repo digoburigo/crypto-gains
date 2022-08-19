@@ -73,6 +73,7 @@ const COINS_IDS = [
   'gains-network',
   'hedera-hashgraph',
   'gnosis',
+  'lido-dao',
 ];
 
 const COINS_IDS_TEST = ['bitcoin', 'ethereum'];
