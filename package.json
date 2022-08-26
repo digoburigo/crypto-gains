@@ -9,7 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "@tanstack/react-query": "^4.2.1",
+    "@tanstack/react-query": "^4.2.3",
     "daisyui": "^2.24.0",
     "next": "12.2.5",
     "react": "18.2.0",

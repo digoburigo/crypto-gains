@@ -75,6 +75,7 @@ const COINS_IDS = [
   'gnosis',
   'immutable-x',
   'lido-dao',
+  'stargate-finance'
 ];
 
 const COINS_IDS_TEST = ['bitcoin', 'ethereum'];
