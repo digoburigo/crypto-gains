@@ -74,6 +74,7 @@ const COINS_IDS = [
   'hedera-hashgraph',
   'gnosis',
   'immutable-x',
+  'lido-dao',
 ];
 
 const COINS_IDS_TEST = ['bitcoin', 'ethereum'];

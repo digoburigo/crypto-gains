@@ -2,7 +2,11 @@ lockfileVersion: 5.4
 
 specifiers:
   '@tanstack/react-query': ^4.2.1
+<<<<<<< HEAD
   '@types/node': 18.7.13
+=======
+  '@types/node': 18.7.8
+>>>>>>> 6f10e38693d1ac89a1bfbf7ab59e8fc8bcbc05be
   '@types/react': 18.0.17
   '@types/react-dom': 18.0.6
   '@types/react-table': ^7.7.12
@@ -29,7 +33,11 @@ dependencies:
   zustand: 4.1.1_react@18.2.0
 
 devDependencies:
+<<<<<<< HEAD
   '@types/node': 18.7.13
+=======
+  '@types/node': 18.7.8
+>>>>>>> 6f10e38693d1ac89a1bfbf7ab59e8fc8bcbc05be
   '@types/react': 18.0.17
   '@types/react-dom': 18.0.6
   '@types/react-table': 7.7.12
@@ -275,8 +283,13 @@ packages:
     resolution: {integrity: sha512-dRLjCWHYg4oaA77cxO64oO+7JwCwnIzkZPdrrC71jQmQtlhM556pwKo5bUzqvZndkVbeFLIIi+9TC40JNF5hNQ==}
     dev: true
 
+<<<<<<< HEAD
   /@types/node/18.7.13:
     resolution: {integrity: sha512-46yIhxSe5xEaJZXWdIBP7GU4HDTG8/eo0qd9atdiL+lFpA03y8KS+lkTN834TWJj5767GbWv4n/P6efyTFt1Dw==}
+=======
+  /@types/node/18.7.8:
+    resolution: {integrity: sha512-/YP55EMK2341JkODUb8DM9O0x1SIz2aBvyF33Uf1c76St3VpsMXEIW0nxuKkq/5cxnbz0RD9cfwNZHEAZQD3ag==}
+>>>>>>> 6f10e38693d1ac89a1bfbf7ab59e8fc8bcbc05be
     dev: true
 
   /@types/prop-types/15.7.5:
