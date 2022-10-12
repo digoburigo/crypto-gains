@@ -23,7 +23,7 @@ const COINS_IDS = [
   'waves',
   'kusama',
   'havven',
-  'the-graph',
+  'kava',
   'loopring',
   'pax-gold',
   'osmosis',
@@ -75,7 +75,7 @@ const COINS_IDS = [
   'gnosis',
   'immutable-x',
   'lido-dao',
-  'stargate-finance'
+  'stargate-finance',
 ];
 
 const COINS_IDS_TEST = ['bitcoin', 'ethereum'];
